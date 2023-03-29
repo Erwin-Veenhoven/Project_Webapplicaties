@@ -7,12 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>IWA</title>
 </head>
+
 <body>
-@include('header')
+@include('layout.header')
 
 @yield('content')
 
-@include('footer')
+@include('layout.footer')
 
 @stack('js')
 </body>
