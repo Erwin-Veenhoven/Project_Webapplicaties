@@ -21,3 +21,9 @@ Route::get('/home', function () {
     return view('home');
 });
 
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::resource('/auth', 'App\Http\Controllers\userController');
+

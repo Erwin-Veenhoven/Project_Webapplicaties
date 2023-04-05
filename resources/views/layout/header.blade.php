@@ -37,9 +37,9 @@
 <header>
     <nav>
         <ul class="navbar">
-            <li><a href="">Home</a></li>
-            <li><a href="">About</a></li>
-            <li style="float: right;"><a href="">Login</a></li>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li style="float: right;"><a href="{{ route("auth.index") }}">Login</a></li>
         </ul>
     </nav>
 </header>
