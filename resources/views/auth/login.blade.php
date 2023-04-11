@@ -3,10 +3,11 @@
 @section('content')
 
     <link rel="stylesheet" href="{{ asset('style.css') }}">
+    <link rel="stylesheet" href="{{ asset('login.css') }}">
 
 <section>
     <h1>Login</h1>
-    <form method="POST" action="login.php" style="border: 2px solid black; padding: 50px; max-width: 300px; margin: 0 auto; border-radius: 10px">
+    <form method="POST" action="login.php">
         <label for="username">Username:</label>
         <input type="text" name="username" required><br><br>
         <label for="password">Password:</label>

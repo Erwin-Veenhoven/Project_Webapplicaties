@@ -2,34 +2,9 @@
 
 @section('content')
 
-    <style>
-        /* CSS voor de pagina */
-        .container {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .box {
-            width: 30%;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 10px;
-            box-sizing: border-box;
-            text-align: center;
-        }
-
-        .box h2 {
-            margin: 0;
-        }
-
-        .box p {
-            margin: 10px 0;
-        }
-
-    </style>
 
     <link rel="stylesheet" href="{{ asset('style.css') }}">
+    <link rel="stylesheet" href="{{ asset('home.css') }}">
 
     <section>
         <h1>Homepagina</h1>

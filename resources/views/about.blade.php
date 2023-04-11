@@ -3,23 +3,7 @@
 @section('content')
 
     <link rel="stylesheet" href="{{ asset('style.css') }}">
-
-    <style>
-        div {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-        }
-
-        img {
-            width: 50%;
-            margin: 0 auto;
-        }
-
-        p {
-            flex: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('about.css') }}">
 
     <section>
         <h1>About Page</h1>
