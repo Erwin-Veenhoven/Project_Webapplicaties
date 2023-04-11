@@ -39,6 +39,8 @@
         <ul class="navbar">
             <li><a href="/home">Home</a></li>
             <li><a href="/about">About</a></li>
+            <li><a href="/contract">Contract</a></li>
+            <li><a href="/monitor">Monitor</a></li>
             <li style="float: right;"><a href="{{ route("auth.index") }}">Login</a></li>
         </ul>
     </nav>
