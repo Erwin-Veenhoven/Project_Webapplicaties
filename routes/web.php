@@ -37,5 +37,9 @@ Route::get('/about', function () {
     return view('about');
 });
 
+Route::get('/weerdata', function () {
+    return view('weerdata');
+});
+
 Route::resource('/auth', 'App\Http\Controllers\userController');
 
