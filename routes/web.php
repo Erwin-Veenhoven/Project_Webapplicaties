@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\GeneratorDataController;
+use App\Http\Controllers\WeatherController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,5 +45,19 @@ Route::get('/weerdata', function () {
     return view('weerdata');
 });
 
-Route::resource('/auth', 'App\Http\Controllers\userController');
+//Route::resource('/auth', 'App\Http\Controllers\userController');
+
+Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [UserController::class, 'login']);
+Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [UserController::class, 'register']);
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+
+
+
+
+
+
+
 
