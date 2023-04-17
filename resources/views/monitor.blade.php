@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <link rel="stylesheet" href="{{ asset('style.css') }}">
     <link rel="stylesheet" href="{{ asset('monitor.css') }}">
 
@@ -27,22 +28,24 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>DATA</td>
-                <td>DATA</td>
-                <td>DATA</td>
-                <td>DATA</td>
-                <td>DATA</td>
-                <td>DATA</td>
-                <td>DATA</td>
-                <td>DATA</td>
-                <td>DATA</td>
-                <td>DATA</td>
-                <td>DATA</td>
-                <td>DATA</td>
-                <td>DATA</td>
-                <td>DATA</td>
-            </tr>
+            @foreach($data as $data)
+                <tr>
+                    <td>{{ $data['stn'] }}</td>
+                    <td>{{ $data['date'] }}</td>
+                    <td>{{ $data['time'] }}</td>
+                    <td>{{ $data['temp'] }}</td>
+                    <td>{{ $data['dewp'] }}</td>
+                    <td>{{ $data['stp'] }}</td>
+                    <td>{{ $data['slp'] }}</td>
+                    <td>{{ $data['visib'] }}</td>
+                    <td>{{ $data['wdsp'] }}</td>
+                    <td>{{ $data['prcp'] }}</td>
+                    <td>{{ $data['sndp'] }}</td>
+                    <td>{{ $data['frshtt'] }}</td>
+                    <td>{{ $data['cldc'] }}</td>
+                    <td>{{ $data['wnddir'] }}</td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </section>

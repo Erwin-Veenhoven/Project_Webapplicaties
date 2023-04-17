@@ -41,6 +41,7 @@
             <li><a href="/about">About</a></li>
             <li><a href="/contract">Contract</a></li>
             <li><a href="/monitor">Monitor</a></li>
+
             {{ Auth::user() }}
             @if(!Auth::user() == null)
                 <li style="float: right;"><a href="{{ route("logout") }}">Logout</a></li>
