@@ -110,7 +110,7 @@ class WeatherDataController extends Controller
      * @param string $station The station to get the entries from.
      * @return Collection The last 30 entries from the station.
      */
-    private function getLastEntries(string $station): Collection {
+    private function getLastEntries(int $station): Collection {
         return WeatherData::where('stn', $station)
             ->orderBY('date', 'desc')
             ->orderBy('time', 'desc')
