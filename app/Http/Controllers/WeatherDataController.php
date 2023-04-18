@@ -37,21 +37,21 @@ class WeatherDataController extends Controller
             $weatherData->wnddir = $item['WNDDIR'] !== 'None' ? $item['WNDDIR'] : null;
 
             // Validate and save weatherData
-            $weatherData = $this->correctWeatherData($weatherData);
+            //$weatherData = $this->correctWeatherData($weatherData);
             $weatherData->save();
         }
     }
 
     public function showWeatherData()
     {
-        Log::info('showWeatherData');
         $data = WeatherData::OrderBy('date', 'desc')->OrderBy('time', 'desc')->get();
         return view('monitor', ['data' => $data]);
     }
 
     public function showWeatherDataKey(Request $request)
     {
-        $data = $request->input('sleutel');
-
+        $key = $request->input('key');
+        $data = WeatherData::where('stn', $key)->OrderBy('date', 'desc')->OrderBy('time', 'desc')->get();
+        return view('monitor', ['data' => $data]);
     }
 }
