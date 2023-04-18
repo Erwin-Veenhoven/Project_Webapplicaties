@@ -68,8 +68,7 @@ class WeatherDataController extends Controller
     private function correctWeatherData(WeatherData $weatherData): WeatherData
     {
         $entries = $this->getLastEntries($weatherData->stn);
-        Log::info($entries);
-        if (count($entries) <= 2) return $weatherData;
+        if (count($entries) <= 1) return $weatherData;
 
         $incorrectFields = $this->getIncorrectFields($weatherData, $entries);
         if (count($incorrectFields) > 0) {
@@ -138,7 +137,6 @@ class WeatherDataController extends Controller
      */
     private function checkTemp(int $temp, Collection $entries): bool {
         $temps = $entries->pluck('temp')->toArray();
-        Log::info($temps);
         $extrapolatedTemp = $this->extrapolate($temps);
         return abs($temp - $extrapolatedTemp) <= 5;
     }
@@ -214,9 +212,11 @@ class WeatherDataController extends Controller
 
     private function extrapolate(array $values): float {
         $n = count($values);
-        if ($n < 2 || $n > 30) {
-            throw new InvalidArgumentException("The input array must contain between 2 and 30 values");
+        if ($n < 1 || $n > 30) {
+            throw new InvalidArgumentException("The input array must contain between 1 and 30 values");
         }
+
+        if ($n === 1) return $values[0];
 
         $sum_x = $sum_y = $sum_xy = $sum_x2 = 0;
         for ($i = 0; $i < $n; $i++) {
