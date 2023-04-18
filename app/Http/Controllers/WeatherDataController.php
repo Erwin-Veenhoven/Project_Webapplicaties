@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\IncorrectWeatherData;
 use App\Models\WeatherData;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use InvalidArgumentException;
 
 class WeatherDataController extends Controller
 {
@@ -37,15 +39,14 @@ class WeatherDataController extends Controller
 
     public function showWeatherData()
     {
+        Log::info('showWeatherData');
         $data = WeatherData::OrderBy('date', 'desc')->OrderBy('time', 'desc')->get();
         return view('monitor', ['data' => $data]);
     }
 
     public function showWeatherDataKey(Request $request)
     {
-        $key = $request->input('key');
-        $data = WeatherData::where('stn', $key)->OrderBy('date', 'desc')->OrderBy('time', 'desc')->get();
-        return view('monitor', ['data' => $data]);
+        $data = $request->input('sleutel');
 
     }
 
@@ -58,6 +59,7 @@ class WeatherDataController extends Controller
     private function correctWeatherData(WeatherData $weatherData): WeatherData
     {
         $entries = $this->getLastEntries($weatherData->stn);
+        Log::info($entries);
         if (count($entries) <= 2) return $weatherData;
 
         $incorrectFields = $this->getIncorrectFields($weatherData, $entries);
@@ -127,6 +129,7 @@ class WeatherDataController extends Controller
      */
     private function checkTemp(int $temp, Collection $entries): bool {
         $temps = $entries->pluck('temp')->toArray();
+        Log::info($temps);
         $extrapolatedTemp = $this->extrapolate($temps);
         return abs($temp - $extrapolatedTemp) <= 5;
     }
