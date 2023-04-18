@@ -24,6 +24,7 @@ class CreateWeatherDataTable extends Migration
             $table->string('frshtt')->nullable();
             $table->float('cldc')->nullable();
             $table->integer('wnddir')->nullable();
+            $table->boolean('cor')->nullable();
             $table->timestamps();
         });
     }

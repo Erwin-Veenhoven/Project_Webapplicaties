@@ -25,6 +25,7 @@ class WeatherData extends Model
         'sndp',
         'frshtt',
         'cldc',
-        'wnddir'
+        'wnddir',
+        'cor'
     ];
 }

@@ -25,6 +25,7 @@
                 <th>FRSHTT</th>
                 <th>CLDC</th>
                 <th>WNDDIR</th>
+                <th>COCK</th>
             </tr>
             </thead>
             <tbody>
@@ -44,6 +45,7 @@
                     <td>{{ $data['frshtt'] }}</td>
                     <td>{{ $data['cldc'] }}</td>
                     <td>{{ $data['wnddir'] }}</td>
+                    <td>{{ $data['cor'] }}</td>
                 </tr>
             @endforeach
             </tbody>
