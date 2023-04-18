@@ -70,8 +70,8 @@ class WeatherDataController extends Controller
         $entries = $this->getLastEntries($weatherData->stn);
         $n = count($entries);
 
-        if ($n === 0 && $hasNullFields) return false;   // Data has null values and can't be corrected.
-        elseif ($n <= 1) return null;                   // Data has no null values and can't be corrected. (Assuming data is correct.)
+        if ($n <= 1 && $hasNullFields) return false;   // Data has null values and can't be corrected.
+        elseif ($n <= 1) return null;                  // Data has no null values and can't be corrected. (Assuming data is correct.)
 
         $incorrectFields = $this->getIncorrectFields($weatherData, $entries);
         if (count($incorrectFields) > 0) {
@@ -121,7 +121,7 @@ class WeatherDataController extends Controller
 
         foreach ($weatherData->getAttributes() as $column => $value) {
             // Check for null values
-            if (is_null($value)) {
+            if (is_null($value) && $value != "cor") {
                 $incorrectFields[] = $column;
                 continue;
             }
@@ -233,8 +233,6 @@ class WeatherDataController extends Controller
         if ($n < 1 || $n > 30) {
             throw new InvalidArgumentException("The input array must contain between 1 and 30 values");
         }
-
-        if ($n == 1) return $values[0];
 
         $sum_x = $sum_y = $sum_xy = $sum_x2 = 0;
         for ($i = 0; $i < $n; $i++) {
