@@ -32,7 +32,7 @@ class WeatherDataController extends Controller
             $weatherData->wnddir = $item['WNDDIR'] !== 'None' ? $item['WNDDIR'] : null;
 
             // Validate and save weatherData
-            $weatherData = $this->correctWeatherData($weatherData);
+            $weatherData->cor = $this->correctWeatherData($weatherData);
             $weatherData->save();
         }
     }
@@ -60,12 +60,12 @@ class WeatherDataController extends Controller
     /**
      * Corrects the weather data if it's wrong and stores the wrong data in the database.
      * @param WeatherData $weatherData The weather data to correct.
-     * @return WeatherData The corrected weather data.
+     * @return bool True if corrected, false otherwise.
      */
-    private function correctWeatherData(WeatherData $weatherData): WeatherData
+    private function correctWeatherData(WeatherData $weatherData): bool
     {
         $entries = $this->getLastEntries($weatherData->stn);
-        if (count($entries) <= 1) return $weatherData;
+        if (count($entries) <= 1) return false;
 
         $incorrectFields = $this->getIncorrectFields($weatherData, $entries);
         if (count($incorrectFields) > 0) {
@@ -73,7 +73,7 @@ class WeatherDataController extends Controller
             $this->correctFields($weatherData, $incorrectFields, $entries);
         }
 
-        return $weatherData;
+        return true;
     }
 
     /**
