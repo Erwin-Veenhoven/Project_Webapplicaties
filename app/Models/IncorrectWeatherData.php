@@ -9,7 +9,7 @@ class IncorrectWeatherData extends Model
 {
     use HasFactory;
 
-    protected $table = 'weather_data';
+    protected $table = 'incorrect_weather_data';
 
     protected $fillable = [
         'stn',

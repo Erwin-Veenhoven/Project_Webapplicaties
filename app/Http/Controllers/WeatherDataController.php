@@ -59,6 +59,7 @@ class WeatherDataController extends Controller
     private function correctWeatherData(WeatherData $weatherData): WeatherData
     {
         $entries = $this->getLastEntries($weatherData->stn);
+        Log::info($entries);
         if (count($entries) <= 2) return $weatherData;
 
         $incorrectFields = $this->getIncorrectFields($weatherData, $entries);
@@ -128,6 +129,7 @@ class WeatherDataController extends Controller
      */
     private function checkTemp(int $temp, Collection $entries): bool {
         $temps = $entries->pluck('temp')->toArray();
+        Log::info($temps);
         $extrapolatedTemp = $this->extrapolate($temps);
         return abs($temp - $extrapolatedTemp) <= 5;
     }
