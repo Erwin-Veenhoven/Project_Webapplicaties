@@ -77,9 +77,10 @@ class WeatherDataController extends Controller
         if (count($incorrectFields) > 0) {
             $this->saveIncorrectWeatherData($weatherData);
             $this->correctFields($weatherData, $incorrectFields, $entries);
+            return true;   // Data is corrected.
         }
 
-        return true;   // Data is corrected.
+        return null;   // Data is correct.
     }
 
     /**
