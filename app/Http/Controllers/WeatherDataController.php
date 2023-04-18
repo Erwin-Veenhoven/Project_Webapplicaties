@@ -59,13 +59,18 @@ class WeatherDataController extends Controller
 
     /**
      * Corrects the weather data if it's wrong and stores the wrong data in the database.
+     * (Note: data can't be corrected if there are no earlier entries in the database to extrapolate from.)
      * @param WeatherData $weatherData The weather data to correct.
-     * @return bool True if corrected, false otherwise.
+     * @return bool|null True if corrected, false if data is incorrect but can't be corrected, null otherwise.
      */
-    private function correctWeatherData(WeatherData $weatherData): bool
+    private function correctWeatherData(WeatherData $weatherData): ?bool
     {
+        $hasNullFields = $this->hasNullFields($weatherData);
         $entries = $this->getLastEntries($weatherData->stn);
-        if (count($entries) <= 1) return false;
+        $n = count($entries);
+
+        if ($n === 0 && $hasNullFields) return false;   // Data has null values and can't be corrected.
+        elseif ($n <= 1) return null;                   // Data has no null values and can't be corrected. (Assuming data is correct.)
 
         $incorrectFields = $this->getIncorrectFields($weatherData, $entries);
         if (count($incorrectFields) > 0) {
@@ -73,7 +78,7 @@ class WeatherDataController extends Controller
             $this->correctFields($weatherData, $incorrectFields, $entries);
         }
 
-        return true;
+        return true;   // Data is corrected.
     }
 
     /**
@@ -88,6 +93,19 @@ class WeatherDataController extends Controller
         unset($attributes['cor']);
         $incorrectData->setRawAttributes($attributes);
         $incorrectData->save();
+    }
+
+    /**
+     * Checks if there are any fields that are null.
+     * @param WeatherData $weatherData The weather data to check.
+     * @return bool True if there are null values, false otherwise.
+     */
+    private function hasNullFields(WeatherData $weatherData): bool
+    {
+        foreach ($weatherData->getAttributes() as $column => $value) {
+            if (is_null($value) && $column != "cor") return true;
+        }
+        return false;
     }
 
     /**
@@ -218,6 +236,8 @@ class WeatherDataController extends Controller
 
         $sum_x = $sum_y = $sum_xy = $sum_x2 = 0;
         for ($i = 0; $i < $n; $i++) {
+            if (is_null($values[$i])) continue;
+
             $sum_x += $i + 1;
             $sum_y += $values[$i];
             $sum_xy += ($i + 1) * $values[$i];

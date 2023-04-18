@@ -2,7 +2,6 @@
 
 @section('content')
 
-
     <link rel="stylesheet" href="{{ asset('style.css') }}">
     <link rel="stylesheet" href="{{ asset('monitor.css') }}">
 
@@ -25,27 +24,34 @@
                 <th>FRSHTT</th>
                 <th>CLDC</th>
                 <th>WNDDIR</th>
-                <th>COCK</th>
+                <th>COR</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($data as $data)
+            @foreach($data as $dat)
                 <tr>
-                    <td>{{ $data['stn'] }}</td>
-                    <td>{{ $data['date'] }}</td>
-                    <td>{{ $data['time'] }}</td>
-                    <td>{{ $data['temp'] }}</td>
-                    <td>{{ $data['dewp'] }}</td>
-                    <td>{{ $data['stp'] }}</td>
-                    <td>{{ $data['slp'] }}</td>
-                    <td>{{ $data['visib'] }}</td>
-                    <td>{{ $data['wdsp'] }}</td>
-                    <td>{{ $data['prcp'] }}</td>
-                    <td>{{ $data['sndp'] }}</td>
-                    <td>{{ $data['frshtt'] }}</td>
-                    <td>{{ $data['cldc'] }}</td>
-                    <td>{{ $data['wnddir'] }}</td>
-                    <td>{{ $data['cor'] }}</td>
+                    <td>{{ $dat['stn'] }}</td>
+                    <td>{{ $dat['date'] }}</td>
+                    <td>{{ $dat['time'] }}</td>
+                    <td>{{ $dat['temp'] }}</td>
+                    <td>{{ $dat['dewp'] }}</td>
+                    <td>{{ $dat['stp'] }}</td>
+                    <td>{{ $dat['slp'] }}</td>
+                    <td>{{ $dat['visib'] }}</td>
+                    <td>{{ $dat['wdsp'] }}</td>
+                    <td>{{ $dat['prcp'] }}</td>
+                    <td>{{ $dat['sndp'] }}</td>
+                    <td>{{ $dat['frshtt'] }}</td>
+                    <td>{{ $dat['cldc'] }}</td>
+                    <td>{{ $dat['wnddir'] }}</td>
+
+                    @if(is_null($dat['cor']))
+                        <td><img src={{ asset('img/GreenCheck.png') }} height="50px" alt={{ $dat['cor'] }}></td>
+                    @elseif($dat['cor'])
+                        <td><img src={{ asset('img/OrangeCheck.png') }} height="50px" alt={{ $dat['cor'] }}></td>
+                    @else
+                        <td><img src={{ asset('img/RedCross.png') }} height="50px" alt={{ $dat['cor'] }}></td>
+                    @endif
                 </tr>
             @endforeach
             </tbody>
