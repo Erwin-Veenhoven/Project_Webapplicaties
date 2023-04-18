@@ -11,8 +11,9 @@
         <div class="container">
             <div class="box">
                 <h2>Weerdata</h2>
-                <form action="/weerdata" method="get">
-                    <input type="text" placeholder="sleutel">
+                <form action="/monitor" method="post">
+                    @csrf
+                    <input type="text" placeholder="sleutel" name="sleutel">
                     <input type="submit" value="Zoek">
                 </form>
                 <p> Hier kunt u een sleutel invoeren om de bijbehorende weerdata op te vragen. </p>

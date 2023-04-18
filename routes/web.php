@@ -30,6 +30,8 @@ Route::get('/contract', function () {
 
 Route::get('/monitor', [WeatherDataController::class, 'showWeatherData'])->name('monitor');
 
+Route::post('/monitor', [WeatherDataController::class, 'showWeatherDataKey'])->name('monitor');
+
 Route::get('/user_reg', function () {
     return view('user_reg');
 });
@@ -47,3 +49,4 @@ Route::post('/register', [UserController::class, 'register']);
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::post('/postWeatherData', [WeatherDataController::class, 'postWeatherData'])->name('postWeatherData');
+
