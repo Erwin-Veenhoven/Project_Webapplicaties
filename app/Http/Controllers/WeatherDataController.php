@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\IncorrectWeatherData;
 use App\Models\KeyData;
 use App\Models\WeatherData;
+use DivisionByZeroError;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
@@ -226,13 +227,13 @@ class WeatherDataController extends Controller
         return settype($value, $type);
     }
 
-    private function extrapolate(array $values): float {
+    private function extrapolate(array $values): float { //TODO: fix function
         $n = count($values);
         if ($n < 1 || $n > 30) {
             throw new InvalidArgumentException("The input array must contain between 1 and 30 values");
         }
 
-        if ($n === 1) return $values[0];
+        if ($n == 1) return $values[0];
 
         $sum_x = $sum_y = $sum_xy = $sum_x2 = 0;
         for ($i = 0; $i < $n; $i++) {
@@ -244,7 +245,12 @@ class WeatherDataController extends Controller
             $sum_x2 += ($i + 1) * ($i + 1);
         }
 
-        $slope = ($n * $sum_xy - $sum_x * $sum_y) / ($n * $sum_x2 - $sum_x * $sum_x);
+        try {
+            $slope = ($n * $sum_xy - $sum_x * $sum_y) / ($n * $sum_x2 - $sum_x * $sum_x);
+        } catch (DivisionByZeroError) {
+            $slope = ($n * $sum_xy - $sum_x * $sum_y);
+        }
+
         $y_intercept = ($sum_y - $slope * $sum_x) / $n;
 
         return $slope * ($n + 1) + $y_intercept;
