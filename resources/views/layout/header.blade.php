@@ -36,12 +36,19 @@
 
 <header>
     <nav>
-        <ul class="navbar">
+        <ul class="navbar" >
             <li><a href="/home">Home</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="/contract">Contract</a></li>
             <li><a href="/monitor">Monitor</a></li>
-            <li style="float: right;"><a href="{{ route("auth.index") }}">Login</a></li>
+
+            {{ Auth::user() }}
+            @if(!Auth::user() == null)
+                <li style="float: right;"><a href="{{ route("logout") }}">Logout</a></li>
+            @else
+                <li style="float: right;"><a href="{{ route("register") }}">Register</a></li>
+                <li style="float: right;"><a href="{{ route("login") }}">Login</a></li>
+            @endif
         </ul>
     </nav>
 </header>
