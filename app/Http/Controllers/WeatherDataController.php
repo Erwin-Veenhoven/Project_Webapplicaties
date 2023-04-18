@@ -59,11 +59,14 @@ class WeatherDataController extends Controller
     private function correctWeatherData(WeatherData $weatherData): WeatherData
     {
         $entries = $this->getLastEntries($weatherData->stn);
+        if (count($entries) <= 2) return $weatherData;
+
         $incorrectFields = $this->getIncorrectFields($weatherData, $entries);
         if (count($incorrectFields) > 0) {
             $this->saveIncorrectWeatherData($weatherData);
             $this->correctFields($weatherData, $incorrectFields, $entries);
         }
+
         return $weatherData;
     }
 
