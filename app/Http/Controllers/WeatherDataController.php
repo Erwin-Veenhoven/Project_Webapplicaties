@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\IncorrectWeatherData;
+use App\Models\KeyData;
 use App\Models\WeatherData;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -46,8 +47,16 @@ class WeatherDataController extends Controller
 
     public function showWeatherDataKey(Request $request)
     {
-        $data = $request->input('sleutel');
+        $key = $request->input('key');
+        $stnString = KeyData::where('token', $key)->value('abilities');
+        $stnArray = json_decode(str_replace("'", "\"", $stnString));
+        Log::info($stnArray);
+        $data = WeatherData::whereIn('stn', $stnArray)
+            ->orderBy('date', 'desc')
+            ->orderBy('time', 'desc')
+            ->get();
 
+        return view('monitor', ['data' => $data]);
     }
 
 
