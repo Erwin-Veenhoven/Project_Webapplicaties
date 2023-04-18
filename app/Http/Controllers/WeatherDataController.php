@@ -121,7 +121,7 @@ class WeatherDataController extends Controller
 
         foreach ($weatherData->getAttributes() as $column => $value) {
             // Check for null values
-            if (is_null($value) && $value != "cor") {
+            if (is_null($value) && $column != "cor") {
                 $incorrectFields[] = $column;
                 continue;
             }
