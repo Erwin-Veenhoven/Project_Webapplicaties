@@ -85,6 +85,7 @@ class WeatherDataController extends Controller
     {
         $incorrectData = new IncorrectWeatherData();
         $attributes = $weatherData->getAttributes();
+        unset($attributes['cor']);
         $incorrectData->setRawAttributes($attributes);
         $incorrectData->save();
     }
