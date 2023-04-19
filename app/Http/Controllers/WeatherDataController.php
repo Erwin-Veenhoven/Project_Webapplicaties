@@ -15,8 +15,8 @@ class WeatherDataController extends Controller
     public function postWeatherData(Request $request)
     {
         $data = $request->json()->get('WEATHERDATA');
-        $weatherData = new WeatherData();
         foreach ($data as $item) {
+            $weatherData = new WeatherData();
             $weatherData->stn    = $item['STN'] !== 'None' ? $item['STN'] : null;
             $weatherData->date   = $item['DATE'] !== 'None' ? $item['DATE'] : null;
             $weatherData->time   = $item['TIME'] !== 'None' ? $item['TIME'] : null;
